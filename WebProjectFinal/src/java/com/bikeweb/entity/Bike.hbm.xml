@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 5, 2017 10:44:25 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.bikeweb.entity.Bike" table="Bike" schema="dbo" catalog="BikeWeb" optimistic-lock="version">
+        <id name="bikeId" type="int">
+            <column name="BikeID" />
+            <generator class="native" />
+        </id>
+        <property name="bikeName" type="string">
+            <column name="BikeName" />
+        </property>
+        <property name="price" type="java.lang.Integer">
+            <column name="Price" />
+        </property>
+        <property name="description" type="string">
+            <column name="Description" />
+        </property>
+        <property name="brand" type="string">
+            <column name="Brand" />
+        </property>
+        <property name="color" type="string">
+            <column name="Color" />
+        </property>
+        <property name="images" type="binary">
+            <column name="Images" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 5, 2017 10:44:25 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.bikeweb.entity.Admin" table="Admin" schema="dbo" catalog="BikeWeb" optimistic-lock="version">
+        <id name="adminId" type="int">
+            <column name="AdminID" />
+            <generator class="assigned" />
+        </id>
+        <property name="adminName" type="string">
+            <column name="AdminName" />
+        </property>
+        <property name="adminPassword" type="string">
+            <column name="AdminPassword" />
+        </property>
+    </class>
+</hibernate-mapping>
