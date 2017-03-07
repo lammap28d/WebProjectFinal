@@ -45,4 +45,5 @@ Contributor(s):
   <table-filter match-name="User"/>
   <table-filter match-name="Customer"/>
   <table-filter match-name="Bike"/>
+   <table-filter match-name="Category"/>
 </hibernate-reverse-engineering>

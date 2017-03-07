@@ -1,5 +1,5 @@
 package com.bikeweb.entity;
-// Generated Mar 5, 2017 10:44:25 AM by Hibernate Tools 4.3.1
+// Generated Mar 7, 2017 12:27:49 PM by Hibernate Tools 4.3.1
 
 
 

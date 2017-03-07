@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 7, 2017 12:27:50 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.bikeweb.entity.Category" table="Category" schema="dbo" catalog="BikeWeb" optimistic-lock="version">
+        <id name="categoryId" type="int">
+            <column name="CategoryID" />
+            <generator class="native" />
+        </id>
+        <property name="categoryName" type="string">
+            <column name="CategoryName" />
+        </property>
+        <set name="bikes" table="Bike" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CategoryID" />
+            </key>
+            <one-to-many class="com.bikeweb.entity.Bike" />
+        </set>
+    </class>
+</hibernate-mapping>

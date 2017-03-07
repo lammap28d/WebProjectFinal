@@ -1,5 +1,5 @@
 package com.bikeweb.entity;
-// Generated Mar 5, 2017 10:44:25 AM by Hibernate Tools 4.3.1
+// Generated Mar 7, 2017 12:27:49 PM by Hibernate Tools 4.3.1
 
 import java.util.Base64;
 
@@ -13,14 +13,15 @@ public class Bike  implements java.io.Serializable {
 
 
      private int bikeId;
+     private Category category;
      private String bikeName;
-     private Integer price;
      private String description;
+     private Integer price;
      private String brand;
      private String color;
      private byte[] images;
      
-     private String imageBase64;
+       private String imageBase64;
 
     public Bike() {
     }
@@ -29,11 +30,12 @@ public class Bike  implements java.io.Serializable {
     public Bike(int bikeId) {
         this.bikeId = bikeId;
     }
-    public Bike(int bikeId, String bikeName, Integer price, String description, String brand, String color, byte[] images) {
+    public Bike(int bikeId, Category category, String bikeName, String description, Integer price, String brand, String color, byte[] images) {
        this.bikeId = bikeId;
+       this.category = category;
        this.bikeName = bikeName;
-       this.price = price;
        this.description = description;
+       this.price = price;
        this.brand = brand;
        this.color = color;
        this.images = images;
@@ -46,6 +48,13 @@ public class Bike  implements java.io.Serializable {
     public void setBikeId(int bikeId) {
         this.bikeId = bikeId;
     }
+    public Category getCategory() {
+        return this.category;
+    }
+    
+    public void setCategory(Category category) {
+        this.category = category;
+    }
     public String getBikeName() {
         return this.bikeName;
     }
@@ -53,19 +62,19 @@ public class Bike  implements java.io.Serializable {
     public void setBikeName(String bikeName) {
         this.bikeName = bikeName;
     }
-    public Integer getPrice() {
-        return this.price;
-    }
-    
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
     public String getDescription() {
         return this.description;
     }
     
     public void setDescription(String description) {
         this.description = description;
+    }
+    public Integer getPrice() {
+        return this.price;
+    }
+    
+    public void setPrice(Integer price) {
+        this.price = price;
     }
     public String getBrand() {
         return this.brand;
@@ -92,6 +101,8 @@ public class Bike  implements java.io.Serializable {
     public String getImageBase64() {
         return new String(Base64.getEncoder().encode(getImages()));
     }
+
+
 }
 
 

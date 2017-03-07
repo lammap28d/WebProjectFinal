@@ -43,20 +43,16 @@
 </div>
 
 <div class="row">
-
+ <c:forEach items="${bikes}" var="bike">
 	<div class="col-sm-4 col-lg-4 col-md-4">
 		<div class="thumbnail">
-			<img src="http://placehold.it/320x150" alt="">
+			<img src="data:image/png;base64,${bike.imageBase64}" alt=""/>
 			<div class="caption">
-				<h4 class="pull-right">$24.99</h4>
+				<h4 class="pull-right">${bike.Price}</h4>
 				<h4>
-					<a href="#">First Product</a>
+					<a href="#">${bike.bikeName}</a>
 				</h4>
-				<p>
-					See more snippets like this online store item at <a target="_blank"
-						href="http://www.bootsnipp.com">Bootsnipp -
-						http://bootsnipp.com</a>.
-				</p>
+				<p>${bike.description}</p>
 			</div>
 			<div class="ratings">
 				<p class="pull-right">15 reviews</p>
@@ -70,7 +66,7 @@
 			</div>
 		</div>
 	</div>
-    
+        </c:forEach>
     
         
     <c:forEach items="${bikes}" var="bike">
@@ -79,11 +75,11 @@
 		<div class="thumbnail">
 			<img src="data:image/png;base64,${bike.imageBase64}" alt=""/>
 			<div class="caption">
-				<h4 class="pull-right">$64.99</h4>
+				<h4 class="pull-right">${bike.Price}</h4>
 				<h4>
 					<a href="#">${bike.bikeName}</a>
 				</h4>
-				<p>${bike.description}</p>
+				<p>${bike.categoryName}</p>
 			</div>
 			<div class="ratings">
 				<p class="pull-right">12 reviews</p>
@@ -103,19 +99,4 @@
 	
 
 
-	<div class="col-sm-4 col-lg-4 col-md-4">
-		<h4>
-			<a href="#">Like this template?</a>
-		</h4>
-		<p>
-			If you like this template, then check out <a target="_blank"
-				href="http://maxoffsky.com/code-blog/laravel-shop-tutorial-1-building-a-review-system/">this
-				tutorial</a> on how to build a working review system for your online
-			store!
-		</p>
-		<a class="btn btn-primary" target="_blank"
-			href="http://maxoffsky.com/code-blog/laravel-shop-tutorial-1-building-a-review-system/">View
-			Tutorial</a>
-	</div>
-
-</div>
+	

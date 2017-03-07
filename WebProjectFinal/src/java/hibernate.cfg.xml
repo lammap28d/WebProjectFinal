@@ -48,9 +48,10 @@ Contributor(s):
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.current_session_context_class">thread</property>
     <property name="hibernate.connection.password">1</property>
+    <mapping resource="com/bikeweb/entity/Category.hbm.xml"/>
     <mapping resource="com/bikeweb/entity/Admin.hbm.xml"/>
-    <mapping resource="com/bikeweb/entity/Bike.hbm.xml"/>
     <mapping resource="com/bikeweb/entity/Customer.hbm.xml"/>
+    <mapping resource="com/bikeweb/entity/Bike.hbm.xml"/>
     <mapping resource="com/bikeweb/entity/User.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

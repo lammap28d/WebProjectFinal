@@ -16,6 +16,18 @@
 					<td><label for="p-price">Product Price</label></td>
 					<td><input type="number" id="p-price" name="p-price"></td>
 				</tr>
+                                <tr>
+					<td><label for="p-name">Product Description</label></td>
+					<td><input type="text" id="p-description" name="p-description"></td>                                     
+				</tr>
+                                 <tr>
+					<td><label for="p-name">Product Brand</label></td>
+					<td><input type="text" id="p-brand" name="p-brand"></td>                                     
+				</tr>          
+                                 <tr>
+					<td><label for="p-name">Product Color</label></td>
+					<td><input type="text" id="p-color" name="p-color"></td>                                     
+				</tr>          
 				<tr>
 					<td><label for="p-img">Product Image</label></td>
 					<td><input type="file" id="p-img" name="p-img"></td>
@@ -23,9 +35,9 @@
 				<tr>
 					<td><label for="p-category">Category</label></td>
 					<td><select>
-							<option value="#">cat1</option>
-							<option value="#">cat2</option>
-							<option value="#">cat3</option>
+							<option value="#">City Bike</option>
+							<option value="#">Sport Bike</option>
+							<option value="#">Children Bike</option>
 					</select></td>
 				</tr>
 				<tr>

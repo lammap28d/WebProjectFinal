@@ -1,21 +1,24 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Mar 5, 2017 10:44:25 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated Mar 7, 2017 12:27:50 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="com.bikeweb.entity.Bike" table="Bike" schema="dbo" catalog="BikeWeb" optimistic-lock="version">
         <id name="bikeId" type="int">
             <column name="BikeID" />
             <generator class="native" />
         </id>
+        <many-to-one name="category" class="com.bikeweb.entity.Category" fetch="select">
+            <column name="CategoryID" />
+        </many-to-one>
         <property name="bikeName" type="string">
             <column name="BikeName" />
         </property>
-        <property name="price" type="java.lang.Integer">
-            <column name="Price" />
-        </property>
         <property name="description" type="string">
             <column name="Description" />
+        </property>
+        <property name="price" type="java.lang.Integer">
+            <column name="Price" />
         </property>
         <property name="brand" type="string">
             <column name="Brand" />
