@@ -13,14 +13,7 @@
 					<td><input type="text" id="p-category" name="p-category"></td>
 				</tr>
 				
-				<tr>
-					<td><label for="p-category">Category</label></td>
-					<td><select>
-							<option value="#">City Bike</option>
-							<option value="#">Sport Bike</option>
-							<option value="#">Children Bike</option>
-					</select></td>
-				</tr>
+				
 				<tr>
 					<td></td>
 					<td><input type="submit" value="Save"></td>

@@ -20,8 +20,10 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
-import com.bikeweb.entity.Bike;
+import com.bikeweb.entity.*;
+import com.bikeweb.entity.Category;
 import com.bikeweb.helper.BikeHelper;
+import com.bikeweb.helper.CategoryHelper;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
@@ -35,11 +37,11 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext;
 @WebServlet(urlPatterns = {"/category-form"})
 public class CategoryFormServlet extends HttpServlet {
 	
-	private BikeHelper bikeHelper;
+	private CategoryHelper CategoryHelper;
 	
 	
 	public CategoryFormServlet() {
-		this.bikeHelper = new BikeHelper();
+		this.CategoryHelper = new CategoryHelper();
 	}
 
     /**
@@ -100,7 +102,7 @@ public class CategoryFormServlet extends HttpServlet {
 
             // Parse the request
             try {
-            	Bike bike = new Bike();
+            	Category category = new Category();
             	
                 List<FileItem> items = upload.parseRequest(new ServletRequestContext(request));
                 Iterator<FileItem> iter = items.iterator();
@@ -108,21 +110,15 @@ public class CategoryFormServlet extends HttpServlet {
                     FileItem item = iter.next();
 
                     if (item.isFormField() ) {
-                        if (item.getFieldName().equals("p-name")) {
-                        	bike.setBikeName(item.getString());
+                        if (item.getFieldName().equals("p-category")) {
+                        	category.setCategoryName(item.getString());
                         }
-                        if(item.getFieldName().equals("p-price")) {
-                            bike.setPrice(Integer.SIZE);
-                            
-                        }
-                    } else {
-                        byte[] bikeImg = item.get();
-                        bike.setImages(bikeImg);
+                       
                     }
                 }
                 
                 
-                bikeHelper.save(bike);
+                CategoryHelper.save(category);
             } catch (FileUploadException e) {
             	
             }

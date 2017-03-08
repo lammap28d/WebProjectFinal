@@ -5,12 +5,13 @@
  */
 package com.bikeweb.helper;
 
-import com.bikeweb.entity.Bike;
+
+import com.bikeweb.entity.Category;
 
 /**
  *
  * @author Lam Nguyen
  */
-public class CategoryHelper extends GenericHelper<Bike, Integer>{
+public class CategoryHelper extends GenericHelper<Category,Integer>{
     
 }
