@@ -18,15 +18,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
 import com.bikeweb.entity.Bike;
+import com.bikeweb.entity.Category;
 import com.bikeweb.helper.BikeHelper;
+import com.bikeweb.helper.CategoryHelper;
+import com.bikeweb.helper.HibernateUtil;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext;
+import org.hibernate.Session;
 
 /**
  *
@@ -34,15 +36,14 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext;
  */
 @WebServlet(urlPatterns = {"/bike-form"})
 public class BikeFormServlet extends HttpServlet {
-	
-	private BikeHelper bikeHelper;
+
+    private BikeHelper bikeHelper;
     private CategoryHelper categoryHelper;
-	
-	
-	public BikeFormServlet() {
+
+    public BikeFormServlet() {
         this.categoryHelper = new CategoryHelper();
-		this.bikeHelper = new BikeHelper();
-	}
+        this.bikeHelper = new BikeHelper();
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -86,11 +87,12 @@ public class BikeFormServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	
-    	boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-    	if (isMultipart) {
-    		List<FileItem> attachedFiles = new ArrayList<FileItem>();
-    		// Create a factory for disk-based file items
+        Session session = null;
+        Category category=null;
+        boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+        if (isMultipart) {
+            List<FileItem> attachedFiles = new ArrayList<FileItem>();
+            // Create a factory for disk-based file items
             DiskFileItemFactory factory = new DiskFileItemFactory();
 
             // Configure a repository (to ensure a secure temp location is used)
@@ -103,65 +105,70 @@ public class BikeFormServlet extends HttpServlet {
 
             // Parse the request
             try {
-            	Bike bike = new Bike();
-            	
+                Bike bike = new Bike();
+
                 List<FileItem> items = upload.parseRequest(new ServletRequestContext(request));
                 Iterator<FileItem> iter = items.iterator();
                 while (iter.hasNext()) {
                     FileItem item = iter.next();
 
-                    if (item.isFormField() ) {
+                    if (item.isFormField()) {
                         if (item.getFieldName().equals("p-name")) {
-                        	bike.setBikeName(item.getString());
+                            bike.setBikeName(item.getString());
                         }
-                        if(item.getFieldName().equals("p-price")) {
+                        if (item.getFieldName().equals("p-price")) {
                             bike.setPrice(Integer.SIZE);
-                            
+
                         }
-                         if(item.getFieldName().equals("p-description")) {
+                        if (item.getFieldName().equals("p-description")) {
                             bike.setDescription(item.getString());
-                            
+
                         }
-                        if(item.getFieldName().equals("p-brand")) {
+                        if (item.getFieldName().equals("p-brand")) {
                             bike.setBrand(item.getString());
                         }
-                         
-                        if(item.getFieldName().equals("p-color")) {
+
+                        if (item.getFieldName().equals("p-color")) {
                             bike.setColor(item.getString());
                         }
-                        if(item.getFieldName().equals("p-category")) {
-                            // Todo get categoryId
-                            // Load Category by Id: category
-                            // bike.setCategory(category)
-                        }
+                        if (item.getFieldName().equals("p-category")) {
 
-                             
-                        
-                    } else {
-                        byte[] bikeImg = item.get();
-                        bike.setImages(bikeImg);
+                            bike.getCategory();
+                         
+                            bike.setCategory(category);
+                            try {
+                                session = HibernateUtil.getSessionFactory().openSession();
+                                category = (Category) session.get(Category.class, category);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            }
+
+                        } else {
+                            byte[] bikeImg = item.get();
+                            bike.setImages(bikeImg);
+                        }
                     }
-                }
-                
-                
-                bikeHelper.save(bike);
-            } catch (FileUploadException e) {
+
+                    bikeHelper.save(bike);
+                }catch (FileUploadException e) {
             	
             }
-    	}
-        
-        
-        processRequest(request, response);
-    }
+            }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
+            processRequest(request, response);
+        }
+
+        /**
+         * Returns a short description of the servlet.
+         *
+         * @return a String containing servlet description
+         */
+        @Override
+        public String getServletInfo
+        
+            () {
         return "Short description";
-    }// </editor-fold>
+        }// </editor-fold>
 
-}
+    }
