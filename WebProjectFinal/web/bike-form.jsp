@@ -34,12 +34,10 @@
 				</tr>
 				<tr>
 					<td><label for="p-category">Category</label></td>
-					<td><select>
-                                                
-                                                <c:forEach value = "category.categoryId" text="category.categoryName"/>
-                                                        
-                                                      
-<                                               </c:forEach>
+					<td><select name="p-category" id="p-category">
+                                    <c:forEach items="${categories}" var="category">
+                                    	<option value="${category.categoryId}">${category.categoryName}</option>
+                                    </c:forEach>
 							
 					</select></td>
 				</tr>

@@ -36,9 +36,11 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext;
 public class BikeFormServlet extends HttpServlet {
 	
 	private BikeHelper bikeHelper;
+    private CategoryHelper categoryHelper;
 	
 	
 	public BikeFormServlet() {
+        this.categoryHelper = new CategoryHelper();
 		this.bikeHelper = new BikeHelper();
 	}
 
@@ -54,6 +56,7 @@ public class BikeFormServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        List<Category> categories = categoryHelper.getAll();
         request.getRequestDispatcher("/bike-form.jsp").forward(request, response);
     }
 
@@ -119,13 +122,19 @@ public class BikeFormServlet extends HttpServlet {
                             bike.setDescription(item.getString());
                             
                         }
-                         if(item.getFieldName().equals("p-brand")) {
+                        if(item.getFieldName().equals("p-brand")) {
                             bike.setBrand(item.getString());
-                         }
+                        }
                          
-                            if(item.getFieldName().equals("p-color")) {
+                        if(item.getFieldName().equals("p-color")) {
                             bike.setColor(item.getString());
-                         }
+                        }
+                        if(item.getFieldName().equals("p-category")) {
+                            // Todo get categoryId
+                            // Load Category by Id: category
+                            // bike.setCategory(category)
+                        }
+
                              
                         
                     } else {
