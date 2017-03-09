@@ -35,9 +35,12 @@
 				<tr>
 					<td><label for="p-category">Category</label></td>
 					<td><select>
-							<option value="#">City Bike</option>
-							<option value="#">Sport Bike</option>
-							<option value="#">Children Bike</option>
+                                                
+                                                <c:forEach value = "category.categoryId" text="category.categoryName"/>
+                                                        
+                                                      
+<                                               </c:forEach>
+							
 					</select></td>
 				</tr>
 				<tr>

@@ -79,7 +79,7 @@
 				<h4>
 					<a href="#">${bike.bikeName}</a>
 				</h4>
-				<p>${bike.categoryName}</p>
+				<p>${category.categoryName}</p>
 			</div>
 			<div class="ratings">
 				<p class="pull-right">12 reviews</p>

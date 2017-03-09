@@ -115,6 +115,19 @@ public class BikeFormServlet extends HttpServlet {
                             bike.setPrice(Integer.SIZE);
                             
                         }
+                         if(item.getFieldName().equals("p-description")) {
+                            bike.setDescription(item.getString());
+                            
+                        }
+                         if(item.getFieldName().equals("p-brand")) {
+                            bike.setBrand(item.getString());
+                         }
+                         
+                            if(item.getFieldName().equals("p-color")) {
+                            bike.setColor(item.getString());
+                         }
+                             
+                        
                     } else {
                         byte[] bikeImg = item.get();
                         bike.setImages(bikeImg);
