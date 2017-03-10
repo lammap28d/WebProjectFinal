@@ -10,7 +10,7 @@ import org.hibernate.Transaction;
 
 
 
-public class GenericHelper<E,K> extends HibernateUtil {
+public class GenericHelper<E, K extends Serializable> extends HibernateUtil {
 	
 	protected Class<? extends E> clazz;
 	
@@ -38,8 +38,7 @@ public class GenericHelper<E,K> extends HibernateUtil {
 	}
 
 	public E find(K key) {
-		// TODO Auto-generated method stub
-		return null;
+		return (E) getSession().get(this.clazz, key);
 	}
 
 	@SuppressWarnings("unchecked")

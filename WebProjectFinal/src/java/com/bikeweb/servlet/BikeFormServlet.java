@@ -87,8 +87,6 @@ public class BikeFormServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Session session = null;
-        Category category=null;
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
         if (isMultipart) {
             List<FileItem> attachedFiles = new ArrayList<FileItem>();
@@ -133,16 +131,11 @@ public class BikeFormServlet extends HttpServlet {
                         }
                         if (item.getFieldName().equals("p-category")) {
 
-                            bike.getCategory();
-                         
+                            String categoryIdStr = item.getString();
+                            Integer categoryId = Integer.valueOf(categoryIdStr);
+
+                            Category category = categoryHelper.find(categoryId);
                             bike.setCategory(category);
-                            try {
-                                session = HibernateUtil.getSessionFactory().openSession();
-                                category = (Category) session.get(Category.class, category);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            }
 
                         } else {
                             byte[] bikeImg = item.get();
