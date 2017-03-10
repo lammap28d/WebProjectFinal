@@ -22,7 +22,6 @@ import com.bikeweb.entity.Bike;
 import com.bikeweb.entity.Category;
 import com.bikeweb.helper.BikeHelper;
 import com.bikeweb.helper.CategoryHelper;
-import com.bikeweb.helper.HibernateUtil;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
@@ -34,7 +33,7 @@ import org.hibernate.Session;
  *
  * @author Lam Nguyen
  */
-@WebServlet(urlPatterns = {"/bike-form"})
+@WebServlet(urlPatterns = { "/bike-form" })
 public class BikeFormServlet extends HttpServlet {
 
     private BikeHelper bikeHelper;
@@ -49,44 +48,58 @@ public class BikeFormServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @param request
+     *            servlet request
+     * @param response
+     *            servlet response
+     * @throws ServletException
+     *             if a servlet-specific error occurs
+     * @throws IOException
+     *             if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         List<Category> categories = categoryHelper.getAll();
-        request.getRequestDispatcher("/bike-form.jsp").forward(request, response);
+        request.getRequestDispatcher("/bike-form.jsp").forward(request,
+                response);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed"
+    // desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @param request
+     *            servlet request
+     * @param response
+     *            servlet response
+     * @throws ServletException
+     *             if a servlet-specific error occurs
+     * @throws IOException
+     *             if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @param request
+     *            servlet request
+     * @param response
+     *            servlet response
+     * @throws ServletException
+     *             if a servlet-specific error occurs
+     * @throws IOException
+     *             if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException {
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
         if (isMultipart) {
             List<FileItem> attachedFiles = new ArrayList<FileItem>();
@@ -95,7 +108,8 @@ public class BikeFormServlet extends HttpServlet {
 
             // Configure a repository (to ensure a secure temp location is used)
             ServletContext servletContext = request.getServletContext();
-            File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
+            File repository = (File) servletContext
+                    .getAttribute("javax.servlet.context.tempdir");
             factory.setRepository(repository);
 
             // Create a new file upload handler
@@ -105,7 +119,8 @@ public class BikeFormServlet extends HttpServlet {
             try {
                 Bike bike = new Bike();
 
-                List<FileItem> items = upload.parseRequest(new ServletRequestContext(request));
+                List<FileItem> items = upload
+                        .parseRequest(new ServletRequestContext(request));
                 Iterator<FileItem> iter = items.iterator();
                 while (iter.hasNext()) {
                     FileItem item = iter.next();
@@ -144,24 +159,25 @@ public class BikeFormServlet extends HttpServlet {
                     }
 
                     bikeHelper.save(bike);
-                }catch (FileUploadException e) {
-            	
-            }
-            }
+                }
+            } catch (FileUploadException e) {
 
-            processRequest(request, response);
+            }
         }
 
-        /**
-         * Returns a short description of the servlet.
-         *
-         * @return a String containing servlet description
-         */
-        @Override
-        public String getServletInfo
-        
-            () {
-        return "Short description";
-        }// </editor-fold>
-
+        processRequest(request, response);
     }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo
+
+    () {
+        return "Short description";
+    }// </editor-fold>
+
+}
