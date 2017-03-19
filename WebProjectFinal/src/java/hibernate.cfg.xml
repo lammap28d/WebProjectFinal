@@ -42,16 +42,21 @@ Contributor(s):
 <hibernate-configuration>
   <session-factory>
     <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
-    <property name="hibernate.connection.url">jdbc:sqlserver://LAMNGUYEN-PC:1433;databaseName=BikeWeb</property>
+    <property name="hibernate.connection.url">jdbc:sqlserver://LAMNGUYEN-PC:1433;databaseName=BikeWeb;characterEncoding=utf-8</property>
     <property name="hibernate.connection.username">sa</property>
     <property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.current_session_context_class">thread</property>
     <property name="hibernate.connection.password">1</property>
+    <property name="hibernate.connection.CharSet">utf8</property>
+    <property name="hibernate.connection.characterEncoding">utf8</property>
+    <property name="hibernate.connection.useUnicode">true</property>
     <mapping resource="com/bikeweb/entity/Category.hbm.xml"/>
-    <mapping resource="com/bikeweb/entity/Admin.hbm.xml"/>
+    <mapping resource="com/bikeweb/entity/OrderDetail.hbm.xml"/>
     <mapping resource="com/bikeweb/entity/Customer.hbm.xml"/>
-    <mapping resource="com/bikeweb/entity/Bike.hbm.xml"/>
     <mapping resource="com/bikeweb/entity/User.hbm.xml"/>
+    <mapping resource="com/bikeweb/entity/Order.hbm.xml"/>
+    <mapping resource="com/bikeweb/entity/Admin.hbm.xml"/>
+    <mapping resource="com/bikeweb/entity/Bike.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

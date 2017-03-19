@@ -22,6 +22,7 @@ import com.bikeweb.entity.Bike;
 import com.bikeweb.entity.Category;
 import com.bikeweb.helper.BikeHelper;
 import com.bikeweb.helper.CategoryHelper;
+import java.math.BigDecimal;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
@@ -33,7 +34,7 @@ import org.hibernate.Session;
  *
  * @author Lam Nguyen
  */
-@WebServlet(urlPatterns = { "/bike-form" })
+@WebServlet(urlPatterns = {"/bike-form"})
 public class BikeFormServlet extends HttpServlet {
 
     private BikeHelper bikeHelper;
@@ -48,19 +49,16 @@ public class BikeFormServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request
-     *            servlet request
-     * @param response
-     *            servlet response
-     * @throws ServletException
-     *             if a servlet-specific error occurs
-     * @throws IOException
-     *             if an I/O error occurs
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         List<Category> categories = categoryHelper.getAll();
+        request.setAttribute("categories", categories);
         request.getRequestDispatcher("/bike-form.jsp").forward(request,
                 response);
     }
@@ -70,14 +68,10 @@ public class BikeFormServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request
-     *            servlet request
-     * @param response
-     *            servlet response
-     * @throws ServletException
-     *             if a servlet-specific error occurs
-     * @throws IOException
-     *             if an I/O error occurs
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request,
@@ -88,14 +82,10 @@ public class BikeFormServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request
-     *            servlet request
-     * @param response
-     *            servlet response
-     * @throws ServletException
-     *             if a servlet-specific error occurs
-     * @throws IOException
-     *             if an I/O error occurs
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request,
@@ -124,13 +114,17 @@ public class BikeFormServlet extends HttpServlet {
                 Iterator<FileItem> iter = items.iterator();
                 while (iter.hasNext()) {
                     FileItem item = iter.next();
-
+                    String name = item.getFieldName();
                     if (item.isFormField()) {
                         if (item.getFieldName().equals("p-name")) {
                             bike.setBikeName(item.getString());
                         }
                         if (item.getFieldName().equals("p-price")) {
-                            bike.setPrice(Integer.SIZE);
+                            String priceStr = item.getString();
+                            Double doubleprice = Double.valueOf(priceStr);
+                            
+                            BigDecimal price = BigDecimal.valueOf(doubleprice);
+                            bike.setPrice(price);
 
                         }
                         if (item.getFieldName().equals("p-description")) {
@@ -152,14 +146,16 @@ public class BikeFormServlet extends HttpServlet {
                             Category category = categoryHelper.find(categoryId);
                             bike.setCategory(category);
 
-                        } else {
-                            byte[] bikeImg = item.get();
-                            bike.setImages(bikeImg);
                         }
-                    }
 
-                    bikeHelper.save(bike);
+                    } else { byte[] bikeImg = item.get();
+
+                        bike.setImages(bikeImg);
+                       
+                    }
                 }
+
+                bikeHelper.save(bike);
             } catch (FileUploadException e) {
 
             }
@@ -174,9 +170,7 @@ public class BikeFormServlet extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo
-
-    () {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

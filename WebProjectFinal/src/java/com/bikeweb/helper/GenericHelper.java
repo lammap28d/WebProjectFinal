@@ -22,10 +22,15 @@ public class GenericHelper<E, K extends Serializable> extends HibernateUtil {
 	}
 	
 	public void save(E entity) {
-		Session session = getSession();
+            try {
+                Session session = getSession();
 		Transaction trans = session.beginTransaction();
 		session.saveOrUpdate(entity);
 		trans.commit();
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+		
 	}
 
 	public void update(E entity) {
@@ -39,7 +44,11 @@ public class GenericHelper<E, K extends Serializable> extends HibernateUtil {
 	}
 
 	public E find(K key) {
-		return (E) getSession().get(this.clazz, key);
+                Session session = getSession();
+		Transaction trans = session.beginTransaction();
+		E result = (E) getSession().get(this.clazz, key);
+                trans.commit();
+                return result;
 	}
 
 	@SuppressWarnings("unchecked")

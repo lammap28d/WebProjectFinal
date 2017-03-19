@@ -20,15 +20,14 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Lam Nguyen
  */
-@WebServlet(urlPatterns = {"/BikeServlet"})
+@WebServlet(urlPatterns = {"/bikes.html", "/bike.html"})
 public class BikeServlet extends HttpServlet {
-    
+
     private BikeHelper bikeHelper;
-	
-	
-	public BikeServlet() {
-		this.bikeHelper = new BikeHelper();
-	}
+
+    public BikeServlet() {
+        this.bikeHelper = new BikeHelper();
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +41,20 @@ public class BikeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-    
-    List<Bike> bikes = bikeHelper.getAll();
-    request.setAttribute("bikes", bikes);
-    request.getRequestDispatcher("/home.jsp").forward(request, response);
+
+        List<Bike> bikes = bikeHelper.getAll();
+        String uri = request.getRequestURI();
+
+        request.setAttribute("bikes", bikes);
+        if (uri.equals("/WebProjectFinal/bikes.html")) {
+            request.getRequestDispatcher("/home.jsp").forward(request, response);
+        } else {
+            String bikeIdStr =request.getParameter("bikeId");
+            int bikeId =Integer.parseInt(bikeIdStr);
+            Bike bike = bikeHelper.find(bikeId);
+            request.setAttribute("bike", bike);
+            request.getRequestDispatcher("/product.jsp").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

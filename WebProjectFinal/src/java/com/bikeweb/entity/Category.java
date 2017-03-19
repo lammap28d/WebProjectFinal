@@ -1,5 +1,5 @@
 package com.bikeweb.entity;
-// Generated Mar 7, 2017 12:27:49 PM by Hibernate Tools 4.3.1
+// Generated Mar 19, 2017 3:06:13 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;

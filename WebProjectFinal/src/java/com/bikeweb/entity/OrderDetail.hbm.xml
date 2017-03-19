@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 19, 2017 3:06:13 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.bikeweb.entity.OrderDetail" table="OrderDetail" schema="dbo" catalog="BikeWeb" optimistic-lock="version">
+        <id name="orderDetailId" type="int">
+            <column name="OrderDetailID" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="bike" class="com.bikeweb.entity.Bike" fetch="select">
+            <column name="BikeID" />
+        </many-to-one>
+        <many-to-one name="order" class="com.bikeweb.entity.Order" fetch="select">
+            <column name="OrderID" />
+        </many-to-one>
+        <property name="orderDetailPrice" type="java.math.BigDecimal">
+            <column name="OrderDetailPrice" scale="4" />
+        </property>
+        <property name="orderDetailQuantity" type="java.lang.Integer">
+            <column name="OrderDetailQuantity" />
+        </property>
+        <property name="orderDetailTotal" type="java.math.BigDecimal">
+            <column name="OrderDetailTotal" scale="4" />
+        </property>
+    </class>
+</hibernate-mapping>

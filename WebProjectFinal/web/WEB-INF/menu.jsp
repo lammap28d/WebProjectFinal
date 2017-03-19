@@ -15,7 +15,7 @@
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li><a href="<c:url value="/products.html" />">Bikes</a></li>
+				<li><a href="<c:url value="/bikes.html" />">Bikes</a></li>
 				<li><a href="<c:url value="/contact.html" />">Contact</a></li>
 				<li><a href="<c:url value="/login.html"/>">Login</a></li>
 				<li><a href="<c:url value="/register.html"/>">Register</a></li>
