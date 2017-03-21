@@ -34,12 +34,26 @@ public class GenericHelper<E, K extends Serializable> extends HibernateUtil {
 	}
 
 	public void update(E entity) {
-		// TODO Auto-generated method stub
+		 try {
+                Session session = getSession();
+		Transaction trans = session.beginTransaction();
+		session.update(entity);
+		trans.commit();
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
 		
 	}
 
 	public void delete(E entity) {
-		// TODO Auto-generated method stub
+		 try {
+                Session session = getSession();
+		Transaction trans = session.beginTransaction();
+		session.delete(entity);
+		trans.commit();
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
 		
 	}
 

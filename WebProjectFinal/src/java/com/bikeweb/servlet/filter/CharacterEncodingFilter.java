@@ -21,8 +21,9 @@ import javax.servlet.annotation.WebFilter;
 @WebFilter("/*")
 public class CharacterEncodingFilter implements Filter {
 
+    
     private String encoding = "utf-8";
-
+    
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -36,6 +37,7 @@ public class CharacterEncodingFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         response.setCharacterEncoding(encoding);
+        request.setCharacterEncoding(encoding);
         response.setContentType("text/html; charset=UTF-8");
         chain.doFilter(request, response);
     }

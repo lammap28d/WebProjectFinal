@@ -106,58 +106,144 @@ public class BikeFormServlet extends HttpServlet {
             ServletFileUpload upload = new ServletFileUpload(factory);
 
             // Parse the request
-            try {
-                Bike bike = new Bike();
+            String action = null;
+            switch (action) {
+                case "insert":
+                    try {
+                        Bike bike = new Bike();
 
-                List<FileItem> items = upload
-                        .parseRequest(new ServletRequestContext(request));
-                Iterator<FileItem> iter = items.iterator();
-                while (iter.hasNext()) {
-                    FileItem item = iter.next();
-                    String name = item.getFieldName();
-                    if (item.isFormField()) {
-                        if (item.getFieldName().equals("p-name")) {
-                            bike.setBikeName(item.getString());
+                        List<FileItem> items = upload
+                                .parseRequest(new ServletRequestContext(request));
+                        Iterator<FileItem> iter = items.iterator();
+                        while (iter.hasNext()) {
+                            FileItem item = iter.next();
+                            String name = item.getFieldName();
+                            if (item.isFormField()) {
+                                if (item.getFieldName().equals("p-name")) {
+                                    bike.setBikeName(item.getString());
+                                }
+                                if (item.getFieldName().equals("p-price")) {
+                                    String priceStr = item.getString();
+                                    Double doubleprice = Double.valueOf(priceStr);
+
+                                    BigDecimal price = BigDecimal.valueOf(doubleprice);
+                                    bike.setPrice(price);
+
+                                }
+                                if (item.getFieldName().equals("p-description")) {
+                                    bike.setDescription(item.getString());
+
+                                }
+                                if (item.getFieldName().equals("p-brand")) {
+                                    bike.setBrand(item.getString());
+                                }
+
+                                if (item.getFieldName().equals("p-color")) {
+                                    bike.setColor(item.getString());
+                                }
+                                if (item.getFieldName().equals("p-category")) {
+
+                                    String categoryIdStr = item.getString();
+                                    Integer categoryId = Integer.valueOf(categoryIdStr);
+
+                                    Category category = categoryHelper.find(categoryId);
+                                    bike.setCategory(category);
+
+                                }
+
+                            } else {
+                                byte[] bikeImg = item.get();
+
+                                bike.setImages(bikeImg);
+
+                            }
                         }
-                        if (item.getFieldName().equals("p-price")) {
-                            String priceStr = item.getString();
-                            Double doubleprice = Double.valueOf(priceStr);
-                            
-                            BigDecimal price = BigDecimal.valueOf(doubleprice);
-                            bike.setPrice(price);
 
-                        }
-                        if (item.getFieldName().equals("p-description")) {
-                            bike.setDescription(item.getString());
+                        bikeHelper.save(bike);
+                    } catch (FileUploadException e) {
 
-                        }
-                        if (item.getFieldName().equals("p-brand")) {
-                            bike.setBrand(item.getString());
-                        }
-
-                        if (item.getFieldName().equals("p-color")) {
-                            bike.setColor(item.getString());
-                        }
-                        if (item.getFieldName().equals("p-category")) {
-
-                            String categoryIdStr = item.getString();
-                            Integer categoryId = Integer.valueOf(categoryIdStr);
-
-                            Category category = categoryHelper.find(categoryId);
-                            bike.setCategory(category);
-
-                        }
-
-                    } else { byte[] bikeImg = item.get();
-
-                        bike.setImages(bikeImg);
-                       
                     }
-                }
+                    break;
+                case "update":
+                    try {
+                        Bike bike = new Bike();
 
-                bikeHelper.save(bike);
-            } catch (FileUploadException e) {
+                        List<FileItem> items = upload
+                                .parseRequest(new ServletRequestContext(request));
+                        Iterator<FileItem> iter = items.iterator();
+                        while (iter.hasNext()) {
+                            FileItem item = iter.next();
+                            String name = item.getFieldName();
+                            if (item.isFormField()) {
+                                if (item.getFieldName().equals("p-name")) {
+                                    bike.setBikeName(item.getString());
+                                }
+                                if (item.getFieldName().equals("p-price")) {
+                                    String priceStr = item.getString();
+                                    Double doubleprice = Double.valueOf(priceStr);
 
+                                    BigDecimal price = BigDecimal.valueOf(doubleprice);
+                                    bike.setPrice(price);
+
+                                }
+                                if (item.getFieldName().equals("p-description")) {
+                                    bike.setDescription(item.getString());
+
+                                }
+                                if (item.getFieldName().equals("p-brand")) {
+                                    bike.setBrand(item.getString());
+                                }
+
+                                if (item.getFieldName().equals("p-color")) {
+                                    bike.setColor(item.getString());
+                                }
+                                if (item.getFieldName().equals("p-category")) {
+
+                                    String categoryIdStr = item.getString();
+                                    Integer categoryId = Integer.valueOf(categoryIdStr);
+
+                                    Category category = categoryHelper.find(categoryId);
+                                    bike.setCategory(category);
+
+                                }
+
+                            } else {
+                                byte[] bikeImg = item.get();
+
+                                bike.setImages(bikeImg);
+
+                            }
+                        }
+
+                        bikeHelper.update(bike);
+                    } catch (FileUploadException e) {
+
+                    }
+                    request.getRequestDispatcher("/bike-form.jsp?action=update").forward(request,
+                            response);
+
+                    break;
+                case "delete":
+                    try {
+                        Bike bike = new Bike();
+
+                        List<FileItem> items = upload
+                                .parseRequest(new ServletRequestContext(request));
+                        Iterator<FileItem> iter = items.iterator();
+                        while (iter.hasNext()) {
+                            FileItem item = iter.next();
+                            String name = item.getFieldName();
+                            int bname = Integer.parseInt(name);
+                            bike.setBikeId(bname);
+
+                        }
+
+                        bikeHelper.delete(bike);
+                    } catch (FileUploadException e) {
+
+                    }
+
+                    break;
             }
         }
 
