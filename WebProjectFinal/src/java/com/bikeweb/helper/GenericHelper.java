@@ -1,5 +1,6 @@
 package com.bikeweb.helper;
 
+import com.bikeweb.entity.Bike;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -49,6 +50,7 @@ public class GenericHelper<E, K extends Serializable> extends HibernateUtil {
 		 try {
                 Session session = getSession();
 		Transaction trans = session.beginTransaction();
+                
 		session.delete(entity);
 		trans.commit();
             } catch (Exception ex) {

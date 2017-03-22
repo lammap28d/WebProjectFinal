@@ -22,6 +22,7 @@ import com.bikeweb.entity.Bike;
 import com.bikeweb.entity.Category;
 import com.bikeweb.helper.BikeHelper;
 import com.bikeweb.helper.CategoryHelper;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
@@ -106,7 +107,7 @@ public class BikeFormServlet extends HttpServlet {
             ServletFileUpload upload = new ServletFileUpload(factory);
 
             // Parse the request
-            String action = null;
+            String action = request.getParameter("action");
             switch (action) {
                 case "insert":
                     try {
@@ -215,7 +216,7 @@ public class BikeFormServlet extends HttpServlet {
                             }
                         }
 
-                        bikeHelper.update(bike);
+                        bikeHelper.save(bike);
                     } catch (FileUploadException e) {
 
                     }
@@ -224,26 +225,15 @@ public class BikeFormServlet extends HttpServlet {
 
                     break;
                 case "delete":
-                    try {
+
+                    try (PrintWriter out = response.getWriter()) {
                         Bike bike = new Bike();
-
-                        List<FileItem> items = upload
-                                .parseRequest(new ServletRequestContext(request));
-                        Iterator<FileItem> iter = items.iterator();
-                        while (iter.hasNext()) {
-                            FileItem item = iter.next();
-                            String name = item.getFieldName();
-                            int bname = Integer.parseInt(name);
-                            bike.setBikeId(bname);
-
-                        }
-
                         bikeHelper.delete(bike);
-                    } catch (FileUploadException e) {
-
+                        request.getRequestDispatcher("/bike-form.jsp?action=delete").forward(request,
+                                response);
                     }
-
                     break;
+
             }
         }
 
