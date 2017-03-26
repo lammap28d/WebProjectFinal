@@ -2,6 +2,6 @@
 
 <p class="lead">Bike Web</p>
 <c:forEach items="${categories}" var="category">
-   <span><a href="/BikeFormServlet?categoryid=${category.categoryId}">${category.categoryName}</span>
+   <a href="/bikes.html?categoryid=${category.categoryId}">${category.categoryName}
     
 </c:forEach>

@@ -53,7 +53,6 @@ Contributor(s):
     <property name="hibernate.connection.useUnicode">true</property>
     <mapping resource="com/bikeweb/entity/Category.hbm.xml"/>
     <mapping resource="com/bikeweb/entity/OrderDetail.hbm.xml"/>
-    <mapping resource="com/bikeweb/entity/Customer.hbm.xml"/>
     <mapping resource="com/bikeweb/entity/User.hbm.xml"/>
     <mapping resource="com/bikeweb/entity/Order.hbm.xml"/>
     <mapping resource="com/bikeweb/entity/Admin.hbm.xml"/>

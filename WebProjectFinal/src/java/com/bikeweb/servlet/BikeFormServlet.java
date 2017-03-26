@@ -60,8 +60,136 @@ public class BikeFormServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         List<Category> categories = categoryHelper.getAll();
         request.setAttribute("categories", categories);
-        request.getRequestDispatcher("/bike-form.jsp").forward(request,
-                response);
+        // Parse the request
+        String action = request.getParameter("action");
+        if (action == null) {
+            request.getRequestDispatcher("/bike-form.jsp").forward(request,
+                    response);
+        } else {
+            
+            switch (action) {
+                case "update":
+                {
+                    String bikeId = request.getParameter("bikeId");
+                    if (bikeId != null) {
+                        Bike bike = bikeHelper.find(Integer.parseInt(bikeId));
+                        request.setAttribute("bike", bike);
+                        request.getRequestDispatcher("/bike-form-update.jsp").forward(request,
+                                response);
+                    }
+                    break;
+                }
+
+                case "save":
+                {
+                    try {
+                        boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+                        if (isMultipart) {
+                            List<FileItem> attachedFiles = new ArrayList<FileItem>();
+                            // Create a factory for disk-based file items
+                            DiskFileItemFactory factory = new DiskFileItemFactory();
+
+                            // Configure a repository (to ensure a secure temp location is used)
+                            ServletContext servletContext = request.getServletContext();
+                            File repository = (File) servletContext
+                                    .getAttribute("javax.servlet.context.tempdir");
+                            factory.setRepository(repository);
+
+                            // Create a new file upload handler
+                            ServletFileUpload upload = new ServletFileUpload(factory);
+                            List<FileItem> items = upload
+                                    .parseRequest(new ServletRequestContext(request));
+                            Iterator<FileItem> iter = items.iterator();
+                            
+                            String bikeId = getBikeId(items);
+                            Bike bike;
+                            if (bikeId == null) {
+                                bike = new Bike();
+                            } else {
+                                bike = bikeHelper.find(Integer.parseInt(bikeId));
+                            }
+                            
+                            while (iter.hasNext()) {
+                                FileItem item = iter.next();
+                                String name = item.getFieldName();
+                                if (item.isFormField()) {
+                                    if (item.getFieldName().equals("p-name")) {
+                                        bike.setBikeName(item.getString());
+                                    }
+                                    if (item.getFieldName().equals("p-price")) {
+                                        String priceStr = item.getString();
+                                        Double doubleprice = Double.valueOf(priceStr);
+
+                                        BigDecimal price = BigDecimal.valueOf(doubleprice);
+                                        bike.setPrice(price);
+
+                                    }
+                                    if (item.getFieldName().equals("p-description")) {
+                                        bike.setDescription(item.getString());
+
+                                    }
+                                    if (item.getFieldName().equals("p-brand")) {
+                                        bike.setBrand(item.getString());
+                                    }
+
+                                    if (item.getFieldName().equals("p-color")) {
+                                        bike.setColor(item.getString());
+                                    }
+                                    if (item.getFieldName().equals("p-category")) {
+
+                                        String categoryIdStr = item.getString();
+                                        Integer categoryId = Integer.valueOf(categoryIdStr);
+
+                                        Category category = categoryHelper.find(categoryId);
+                                        bike.setCategory(category);
+
+                                    }
+
+                                } else {
+                                    byte[] bikeImg = item.get();
+                                    if (bikeImg != null && bikeImg.length > 0) {
+                                        bike.setImages(bikeImg);
+                                    }
+                                }
+                            }
+
+                            bikeHelper.save(bike);
+                        }
+                    } catch (FileUploadException e) {
+                    }
+                    request.getRequestDispatcher("/bike-form.jsp?action=update").forward(request,
+                            response);
+
+                    break;
+                }
+                case "delete":
+                {
+                    String bikeId = request.getParameter("bikeId");
+                    Bike bike = bikeHelper.find(Integer.parseInt(bikeId));
+                    bikeHelper.delete(bike);
+                    request.getRequestDispatcher("/bike-form.jsp?action=delete").forward(request,
+                            response);
+                    break;
+                }
+            }
+        }
+    }
+
+    private String getBikeId(List<FileItem> items) {
+        String bikeId = null;
+        Iterator<FileItem> iter = items.iterator();
+        while (iter.hasNext()) {
+            FileItem item = iter.next();
+            String name = item.getFieldName();
+            if (item.isFormField()) {
+                if (item.getFieldName().equals("p-id")) {
+                    bikeId = item.getString();
+                    break;
+                }
+            }
+        }
+        
+        return bikeId;
     }
 
     // <editor-fold defaultstate="collapsed"
@@ -91,151 +219,6 @@ public class BikeFormServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
-        boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-        if (isMultipart) {
-            List<FileItem> attachedFiles = new ArrayList<FileItem>();
-            // Create a factory for disk-based file items
-            DiskFileItemFactory factory = new DiskFileItemFactory();
-
-            // Configure a repository (to ensure a secure temp location is used)
-            ServletContext servletContext = request.getServletContext();
-            File repository = (File) servletContext
-                    .getAttribute("javax.servlet.context.tempdir");
-            factory.setRepository(repository);
-
-            // Create a new file upload handler
-            ServletFileUpload upload = new ServletFileUpload(factory);
-
-            // Parse the request
-            String action = request.getParameter("action");
-            switch (action) {
-                case "insert":
-                    try {
-                        Bike bike = new Bike();
-
-                        List<FileItem> items = upload
-                                .parseRequest(new ServletRequestContext(request));
-                        Iterator<FileItem> iter = items.iterator();
-                        while (iter.hasNext()) {
-                            FileItem item = iter.next();
-                            String name = item.getFieldName();
-                            if (item.isFormField()) {
-                                if (item.getFieldName().equals("p-name")) {
-                                    bike.setBikeName(item.getString());
-                                }
-                                if (item.getFieldName().equals("p-price")) {
-                                    String priceStr = item.getString();
-                                    Double doubleprice = Double.valueOf(priceStr);
-
-                                    BigDecimal price = BigDecimal.valueOf(doubleprice);
-                                    bike.setPrice(price);
-
-                                }
-                                if (item.getFieldName().equals("p-description")) {
-                                    bike.setDescription(item.getString());
-
-                                }
-                                if (item.getFieldName().equals("p-brand")) {
-                                    bike.setBrand(item.getString());
-                                }
-
-                                if (item.getFieldName().equals("p-color")) {
-                                    bike.setColor(item.getString());
-                                }
-                                if (item.getFieldName().equals("p-category")) {
-
-                                    String categoryIdStr = item.getString();
-                                    Integer categoryId = Integer.valueOf(categoryIdStr);
-
-                                    Category category = categoryHelper.find(categoryId);
-                                    bike.setCategory(category);
-
-                                }
-
-                            } else {
-                                byte[] bikeImg = item.get();
-
-                                bike.setImages(bikeImg);
-
-                            }
-                        }
-
-                        bikeHelper.save(bike);
-                    } catch (FileUploadException e) {
-
-                    }
-                    break;
-                case "update":
-                    try {
-                        Bike bike = new Bike();
-
-                        List<FileItem> items = upload
-                                .parseRequest(new ServletRequestContext(request));
-                        Iterator<FileItem> iter = items.iterator();
-                        while (iter.hasNext()) {
-                            FileItem item = iter.next();
-                            String name = item.getFieldName();
-                            if (item.isFormField()) {
-                                if (item.getFieldName().equals("p-name")) {
-                                    bike.setBikeName(item.getString());
-                                }
-                                if (item.getFieldName().equals("p-price")) {
-                                    String priceStr = item.getString();
-                                    Double doubleprice = Double.valueOf(priceStr);
-
-                                    BigDecimal price = BigDecimal.valueOf(doubleprice);
-                                    bike.setPrice(price);
-
-                                }
-                                if (item.getFieldName().equals("p-description")) {
-                                    bike.setDescription(item.getString());
-
-                                }
-                                if (item.getFieldName().equals("p-brand")) {
-                                    bike.setBrand(item.getString());
-                                }
-
-                                if (item.getFieldName().equals("p-color")) {
-                                    bike.setColor(item.getString());
-                                }
-                                if (item.getFieldName().equals("p-category")) {
-
-                                    String categoryIdStr = item.getString();
-                                    Integer categoryId = Integer.valueOf(categoryIdStr);
-
-                                    Category category = categoryHelper.find(categoryId);
-                                    bike.setCategory(category);
-
-                                }
-
-                            } else {
-                                byte[] bikeImg = item.get();
-
-                                bike.setImages(bikeImg);
-
-                            }
-                        }
-
-                        bikeHelper.save(bike);
-                    } catch (FileUploadException e) {
-
-                    }
-                    request.getRequestDispatcher("/bike-form.jsp?action=update").forward(request,
-                            response);
-
-                    break;
-                case "delete":
-
-                    try (PrintWriter out = response.getWriter()) {
-                        Bike bike = new Bike();
-                        bikeHelper.delete(bike);
-                        request.getRequestDispatcher("/bike-form.jsp?action=delete").forward(request,
-                                response);
-                    }
-                    break;
-
-            }
-        }
 
         processRequest(request, response);
     }

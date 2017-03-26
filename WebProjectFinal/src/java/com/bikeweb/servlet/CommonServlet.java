@@ -5,11 +5,12 @@
  */
 package com.bikeweb.servlet;
 
-import com.bikeweb.entity.Bike;
+import com.bikeweb.entity.Category;
 import com.bikeweb.helper.BikeHelper;
+import com.bikeweb.helper.CategoryHelper;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,13 +21,14 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Lam Nguyen
  */
-@WebServlet(urlPatterns = {"/bikes.html", "/bike.html"})
-public class BikeServlet extends CommonServlet {
 
-    private BikeHelper bikeHelper;
+public class CommonServlet extends HttpServlet {
 
-    public BikeServlet() {
-        this.bikeHelper = new BikeHelper();
+    private CategoryHelper categoryHelper;
+
+    public CommonServlet() {
+        this.categoryHelper = new CategoryHelper();
+
     }
 
     /**
@@ -40,21 +42,10 @@ public class BikeServlet extends CommonServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        super.processRequest(request, response);
-
-        List<Bike> bikes = bikeHelper.getAll();
-        String uri = request.getRequestURI();
-
-        request.setAttribute("bikes", bikes);
-        if (uri.equals("/WebProjectFinal/bikes.html")) {
-            request.getRequestDispatcher("/home.jsp").forward(request, response);
-        } else {
-            String bikeIdStr =request.getParameter("bikeId");
-            int bikeId =Integer.parseInt(bikeIdStr);
-            Bike bike = bikeHelper.find(bikeId);
-            request.setAttribute("bike", bike);
-            request.getRequestDispatcher("/product.jsp").forward(request, response);
-        }
+        response.setContentType("text/html;charset=UTF-8");
+        List<Category> categories = categoryHelper.getAll();
+        request.setAttribute("categories", categories);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

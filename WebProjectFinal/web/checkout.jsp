@@ -1,17 +1,15 @@
-<%-- 
-    Document   : checkout
-    Created on : Mar 19, 2017, 5:01:41 PM
-    Author     : Lam Nguyen
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
+    <%@ include file="/WEB-INF/head.jsp" %>
     <body>
-        <h1>Hello World!</h1>
+        <%@include file="/WEB-INF/header.jsp" %>
+        <div class="container">
+        	<%@include file="/WEB-INF/checkout-content-page.jsp" %>
+        </div>
+        <div class="container">
+	        <%@include file="/WEB-INF/footer.jsp" %>
+        </div>
     </body>
 </html>

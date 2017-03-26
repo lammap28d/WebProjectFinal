@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Mar 19, 2017 3:06:13 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Mar 26, 2017 3:19:26 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="com.bikeweb.entity.User" table="User" schema="dbo" catalog="BikeWeb" optimistic-lock="version">
+    <class name="com.bikeweb.entity.User" table="`User`" schema="dbo" catalog="BikeWeb" optimistic-lock="version">
         <id name="userId" type="int">
             <column name="UserID" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <property name="userName" type="string">
             <column name="UserName" />
@@ -14,5 +14,26 @@
         <property name="userPassword" type="string">
             <column name="UserPassword" />
         </property>
+        <property name="firstName" type="string">
+            <column name="FirstName" />
+        </property>
+        <property name="lastName" type="string">
+            <column name="LastName" />
+        </property>
+        <property name="email" type="string">
+            <column name="Email" />
+        </property>
+        <property name="phone" type="string">
+            <column name="Phone" />
+        </property>
+        <property name="address" type="string">
+            <column name="Address" />
+        </property>
+        <set name="orders" table="`Order`" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="UserID" />
+            </key>
+            <one-to-many class="com.bikeweb.entity.Order" />
+        </set>
     </class>
 </hibernate-mapping>

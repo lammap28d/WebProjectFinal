@@ -21,7 +21,7 @@
 
     </thead>
     <tbody>
-        <c:forEach items="${order.orderDetails}" var="orderDetail">
+        <c:forEach items="${cart.cartDetails}" var="cartDetail">
 
 
             <tr class="cart_item">
@@ -29,23 +29,23 @@
 
 
                 <td class="product-thumbnail">
-                    <img width="105" height="70" src="data:image/png;base64,${orderDetail.bike.imageBase64}" >					</td>
+                    <img width="105" height="70" src="data:image/png;base64,${cartDetail.bike.imageBase64}" >					</td>
 
                 <td class="product-name">
-                    ${orderDetail.bike.bikeName}	</td>
+                    ${cartDetail.bike.bikeName}	</td>
 
                 <td class="product-price">
-                    <span class="amount">${orderDetail.orderDetailPrice}</span>					</td>
+                    <span class="amount">${cartDetail.cartDetailPrice}</span>					</td>
 
                 <td class="product-quantity">
                     <div class="quantity-adder">
-                        <div class="quantity">${orderDetail.orderDetailQuantity}
+                        <div class="quantity">${cartDetail.cartDetailQuantity}
 
                         </div>
                     </div>					</td>
 
                 <td class="product-subtotal">
-                    <span class="amount">${orderDetail.orderDetailTotal}</span>					</td>
+                    <span class="amount">${cartDetail.cartDetailTotal}</span>					</td>
             </tr>
         </c:forEach>
 
@@ -65,7 +65,7 @@
 
                 <tr class="order-total">
                     <th>Tổng</th>
-                    <td><strong><span class="amount">${order.orderTotal}</span></strong> </td>
+                    <td><strong><span class="amount">${cart.cartTotal}</span></strong> </td>
                 </tr>
 
 

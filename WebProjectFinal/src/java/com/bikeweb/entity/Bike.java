@@ -1,5 +1,5 @@
 package com.bikeweb.entity;
-// Generated Mar 19, 2017 3:06:13 PM by Hibernate Tools 4.3.1
+// Generated Mar 26, 2017 3:19:26 PM by Hibernate Tools 4.3.1
 
 
 import java.io.Serializable;
@@ -23,8 +23,6 @@ public class Bike  implements java.io.Serializable {
      private String color;
      private byte[] images;
      private Set<OrderDetail> orderDetails = new HashSet<OrderDetail>(0);
-     
-     private String imageBase64;
 
     public Bike() {
     }
@@ -59,14 +57,14 @@ public class Bike  implements java.io.Serializable {
     public void setCategory(Category category) {
         this.category = category;
     }
-    public Serializable getBikeName() {
+    public String getBikeName() {
         return this.bikeName;
     }
     
     public void setBikeName(String bikeName) {
         this.bikeName = bikeName;
     }
-    public Serializable getDescription() {
+    public String getDescription() {
         return this.description;
     }
     
@@ -80,14 +78,14 @@ public class Bike  implements java.io.Serializable {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
-    public Serializable getBrand() {
+    public String getBrand() {
         return this.brand;
     }
     
     public void setBrand(String brand) {
         this.brand = brand;
     }
-    public Serializable getColor() {
+    public String getColor() {
         return this.color;
     }
     
@@ -112,6 +110,7 @@ public class Bike  implements java.io.Serializable {
     public String getImageBase64() {
         return new String(Base64.getEncoder().encode(getImages()));
     }
+
 }
 
 

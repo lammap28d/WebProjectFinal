@@ -1,5 +1,5 @@
 package com.bikeweb.entity;
-// Generated Mar 19, 2017 3:06:13 PM by Hibernate Tools 4.3.1
+// Generated Mar 26, 2017 3:19:26 PM by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;
@@ -55,7 +55,7 @@ public class OrderDetail  implements java.io.Serializable {
         this.order = order;
     }
     public BigDecimal getOrderDetailPrice() {
-        return this.bike.getPrice();
+        return this.orderDetailPrice;
     }
     
     public void setOrderDetailPrice(BigDecimal orderDetailPrice) {
@@ -69,8 +69,7 @@ public class OrderDetail  implements java.io.Serializable {
         this.orderDetailQuantity = orderDetailQuantity;
     }
     public BigDecimal getOrderDetailTotal() {
-        BigDecimal quantiy = new BigDecimal(this.getOrderDetailQuantity());
-        return this.bike.getPrice().multiply(quantiy);
+        return this.orderDetailTotal;
     }
     
     public void setOrderDetailTotal(BigDecimal orderDetailTotal) {

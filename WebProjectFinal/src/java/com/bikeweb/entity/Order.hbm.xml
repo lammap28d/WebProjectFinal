@@ -1,23 +1,23 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Mar 19, 2017 3:06:13 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Mar 26, 2017 3:19:26 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="com.bikeweb.entity.Order" table="Order" schema="dbo" catalog="BikeWeb" optimistic-lock="version">
+    <class name="com.bikeweb.entity.Order" table="`Order`" schema="dbo" catalog="BikeWeb" optimistic-lock="version">
         <id name="orderId" type="int">
             <column name="OrderID" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
-        <many-to-one name="customer" class="com.bikeweb.entity.Customer" fetch="select">
-            <column name="CustomerID" />
+        <many-to-one name="user" class="com.bikeweb.entity.User" fetch="select">
+            <column name="UserID" />
         </many-to-one>
-        <property name="orderTotal" type="java.math.BigDecimal">
-            <column name="OrderTotal" />
+        <property name="orderTotal" type="big_decimal">
+            <column name="OrderTotal" scale="4" />
         </property>
         <property name="orderQuantity" type="java.lang.Integer">
             <column name="OrderQuantity" />
         </property>
-        <set name="orderDetails" table="OrderDetail" inverse="true" lazy="true" fetch="select">
+        <set name="orderDetails" table="OrderDetail"  cascade="save-update" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="OrderID" />
             </key>

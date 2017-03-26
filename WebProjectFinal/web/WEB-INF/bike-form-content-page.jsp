@@ -1,45 +1,34 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://ckeditor.com" prefix="ckeditor" %>
-<!DOCTYPE html>
-
-<%@ include file="/WEB-INF/head.jsp"%>
-
-<%@include file="/WEB-INF/header.jsp"%>
 <c:url value='/resources/3rdParty/ckeditor' var="url"/>
 <form method="post" action="<c:url value="/bike-form?action=save"/>" enctype="multipart/form-data">
-    <input type="hidden" value="${bike.bikeId}" name="p-id"/>
     <table>
         <tr>
             <td><label for="p-name">Product Name</label></td>
-            <td><input type="text" id="p-name" name="p-name" value="${bike.bikeName}"></td>
+            <td><input type="text" id="p-name" name="p-name"></td>
         </tr>
         <tr>
             <td><label for="p-price">Product Price</label></td>
-            <td><input type="number" id="p-price" name="p-price" value="${bike.price}" ></td>
+            <td><input type="number" id="p-price" name="p-price"></td>
         </tr>
         <tr>
             <td><label for="p-name">Product Description</label></td>
-            <td> <textarea cols="80" id="p-description" name="p-description" rows="10" value="${bike.description}"></textarea></td>
+            <td> <textarea cols="80" id="p-description" name="p-description" rows="10"></textarea></td>
 
 
         </tr>
         <tr>
             <td><label for="p-name">Product Brand</label></td>
-            <td><input type="text" id="p-brand" name="p-brand" value="${bike.brand}"></td>                                     
+            <td><input type="text" id="p-brand" name="p-brand"></td>                                     
         </tr>          
         <tr>
             <td><label for="p-name">Product Color</label></td>
-            <td><input type="text" id="p-color" name="p-color" value="${bike.color}"></td>                                     
+            <td><input type="text" id="p-color" name="p-color"></td>                                     
         </tr>          
         <tr>
             <td><label for="p-img">Product Image</label></td>
             <td><input type="file" id="p-img" name="p-img"></td>
-        </tr>
-         <tr>
-            <td></td>
-            
-            <td><img src="data:image/png;base64,${bike.imageBase64}" alt=""/></td>
         </tr>
         <tr>
             <td><label for="p-category">Category</label></td>
@@ -52,14 +41,10 @@
         </tr>
         <tr>
             <td></td>
-            <td><input type="submit" value="Update"></td>
+            <td><input type="submit" value="Save"></td>
         </tr>
     </table>
 </form>
 <ckeditor:replace replace="p-description" basePath="${url}" />
-
-<div class="container">
-    <%@include file="/WEB-INF/footer.jsp"%>
-</div>
 
 

@@ -1,3 +1,4 @@
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -5,7 +6,7 @@
     <body>
         <%@include file="/WEB-INF/header.jsp" %>
         <div class="container">
-        	<%@include file="/WEB-INF/bike-form-content-page.jsp" %>
+        	<%@include file="/WEB-INF/order-complete-content-page.jsp" %>
         </div>
         <div class="container">
 	        <%@include file="/WEB-INF/footer.jsp" %>

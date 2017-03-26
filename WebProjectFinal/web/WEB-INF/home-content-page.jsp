@@ -57,7 +57,7 @@
                     <a href="#">${bike.bikeName}</a>
                 </h4>
                 <p>${category.categoryName}</p>
-                 <a href="/BikeFormServlet?action=update&&bikeid=${bike.bikeId}">Update</a>/<a href="/BikeFormServlet?action=delete&&bikeid=${bike.bikeId}">Delete</a>
+                 <a  href="<c:url value="/bike-form?action=update&&bikeId=${bike.bikeId}"/>">Update</a>/<a href="<c:url value="/bike-form?action=delete&&bikeId=${bike.bikeId}"/>">Delete</a>
             </div>
 
         </div>

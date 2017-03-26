@@ -18,7 +18,7 @@
                         <h1>${bike.bikeName}</h1>
                         <p > <span>${bike.price} </span> </p>
                         
-                        <form class="form-inline" action="<c:url value="/cart.html"/>" method="post">
+                        <form class="form-inline" action="<c:url value="/cart.html?action=add"/>" method="post">
                             <input type="hidden" name="bikeID" value="${bike.bikeId}">
                            <div class="form-group">
                                <label for="qty">Quantity: </label>
