@@ -29,6 +29,7 @@ import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext;
+import org.apache.tomcat.util.http.fileupload.util.Streams;
 import org.hibernate.Session;
 
 /**
@@ -114,7 +115,7 @@ public class BikeFormServlet extends HttpServlet {
                                 String name = item.getFieldName();
                                 if (item.isFormField()) {
                                     if (item.getFieldName().equals("p-name")) {
-                                        bike.setBikeName(item.getString());
+                                        bike.setBikeName(Streams.asString(item.getInputStream(),"UTF-8"));
                                     }
                                     if (item.getFieldName().equals("p-price")) {
                                         String priceStr = item.getString();
@@ -125,7 +126,7 @@ public class BikeFormServlet extends HttpServlet {
 
                                     }
                                     if (item.getFieldName().equals("p-description")) {
-                                        bike.setDescription(item.getString());
+                                        bike.setDescription(Streams.asString(item.getInputStream(),"UTF-8"));
 
                                     }
                                     if (item.getFieldName().equals("p-brand")) {
