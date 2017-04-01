@@ -18,8 +18,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
 import com.bikeweb.entity.*;
 import com.bikeweb.entity.Category;
 import com.bikeweb.helper.BikeHelper;
@@ -34,15 +32,14 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext;
  *
  * @author Lam Nguyen
  */
-@WebServlet(urlPatterns = {"/category-form"})
+@WebServlet(urlPatterns = {"/category-form.html"})
 public class CategoryFormServlet extends HttpServlet {
-	
-	private CategoryHelper CategoryHelper;
-	
-	
-	public CategoryFormServlet() {
-		this.CategoryHelper = new CategoryHelper();
-	}
+
+    private CategoryHelper categoryHelper;
+
+    public CategoryFormServlet() {
+        this.categoryHelper = new CategoryHelper();
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -85,46 +82,9 @@ public class CategoryFormServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	
-    	boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-    	if (isMultipart) {
-    		List<FileItem> attachedFiles = new ArrayList<FileItem>();
-    		// Create a factory for disk-based file items
-            DiskFileItemFactory factory = new DiskFileItemFactory();
-
-            // Configure a repository (to ensure a secure temp location is used)
-            ServletContext servletContext = request.getServletContext();
-            File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
-            factory.setRepository(repository);
-
-            // Create a new file upload handler
-            ServletFileUpload upload = new ServletFileUpload(factory);
-
-            // Parse the request
-            try {
-            	Category category = new Category();
-            	
-                List<FileItem> items = upload.parseRequest(new ServletRequestContext(request));
-                Iterator<FileItem> iter = items.iterator();
-                while (iter.hasNext()) {
-                    FileItem item = iter.next();
-
-                    if (item.isFormField() ) {
-                        if (item.getFieldName().equals("p-category")) {
-                        	category.setCategoryName(item.getString());
-                        }
-                       
-                    }
-                }
-                
-                
-                CategoryHelper.save(category);
-            } catch (FileUploadException e) {
-            	
-            }
-    	}
-        
-        
+        Category category = new Category();
+        category.setCategoryName(request.getParameter("p-category"));
+        categoryHelper.save(category);
         processRequest(request, response);
     }
 

@@ -121,6 +121,46 @@ public class CartServlet extends HttpServlet {
                     response.sendRedirect("cart.html?action=view");
                 }
                 break;
+                case "update": {
+                    HttpSession session = request.getSession(true);
+                    Cart cart = (Cart) session.getAttribute("cart");
+
+                    Set<CartItem> cartDetails = cart.getCartDetails();
+                    Iterator<CartItem> iter = cartDetails.iterator();
+
+                    while (iter.hasNext()) {
+                        CartItem cartItemTemp = iter.next();
+                        String qty = request.getParameter("cart[" + cartItemTemp.getBike().getBikeId() + "]");
+                        cartItemTemp.setCartDetailQuantity(Integer.parseInt(qty));
+                    }
+                }
+
+                response.sendRedirect("cart.html?action=view");
+                break;
+
+                case "delete": {
+                    String bikeId = request.getParameter("bikeId");
+                    if (bikeId != null) {
+                        int bikeIdVal = Integer.parseInt(bikeId);
+                        HttpSession session = request.getSession(true);
+                        Cart cart = (Cart) session.getAttribute("cart");
+                        Set<CartItem> cartDetails = cart.getCartDetails();
+                        Iterator<CartItem> iter = cartDetails.iterator();
+
+                        while (iter.hasNext()) {
+                            CartItem cartItemTemp = iter.next();
+
+                            if (cartItemTemp.getBike().getBikeId() == bikeIdVal) {
+                                iter.remove();
+                                break;
+                            }
+                        }
+                    }
+                    response.sendRedirect("cart.html?action=view");
+
+                    break;
+                }
+
                 case "view": {
                     HttpSession session = request.getSession(true);
                     Cart cart = (Cart) session.getAttribute("cart");

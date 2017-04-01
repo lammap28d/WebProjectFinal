@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://ckeditor.com" prefix="ckeditor" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="row carousel-holder">
 
     <div class="col-md-3">
@@ -22,7 +23,7 @@
                             <input type="hidden" name="bikeID" value="${bike.bikeId}">
                            <div class="form-group">
                                <label for="qty">Quantity: </label>
-                              <input type="number" step="1" min="1" name="qty" value="1" title="SL" class="lam form-control" style="width: 100px;">
+                              <input class="qty" type="number" step="1" min="1" name="qty" value="1" title="SL" class="form-control">
                            </div>
                             <button type="submit" class="btn btn-default">Add To Cart</button>
                         </form>

@@ -130,11 +130,11 @@ public class BikeFormServlet extends HttpServlet {
 
                                     }
                                     if (item.getFieldName().equals("p-brand")) {
-                                        bike.setBrand(item.getString());
+                                        bike.setBrand(Streams.asString(item.getInputStream(),"UTF-8"));
                                     }
 
                                     if (item.getFieldName().equals("p-color")) {
-                                        bike.setColor(item.getString());
+                                        bike.setColor(Streams.asString(item.getInputStream(),"UTF-8"));
                                     }
                                     if (item.getFieldName().equals("p-category")) {
 
@@ -158,8 +158,7 @@ public class BikeFormServlet extends HttpServlet {
                         }
                     } catch (FileUploadException e) {
                     }
-                    request.getRequestDispatcher("/bike-form.jsp?action=update").forward(request,
-                            response);
+                    response.sendRedirect("bikes.html");
 
                     break;
                 }
@@ -168,8 +167,7 @@ public class BikeFormServlet extends HttpServlet {
                     String bikeId = request.getParameter("bikeId");
                     Bike bike = bikeHelper.find(Integer.parseInt(bikeId));
                     bikeHelper.delete(bike);
-                    request.getRequestDispatcher("/bike-form.jsp?action=delete").forward(request,
-                            response);
+                    response.sendRedirect("bikes.html");
                     break;
                 }
             }

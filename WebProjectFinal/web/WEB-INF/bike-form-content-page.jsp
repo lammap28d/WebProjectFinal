@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://ckeditor.com" prefix="ckeditor" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:url value='/resources/3rdParty/ckeditor' var="url"/>
 <form method="post" action="<c:url value="/bike-form?action=save"/>" enctype="multipart/form-data">
     <table>

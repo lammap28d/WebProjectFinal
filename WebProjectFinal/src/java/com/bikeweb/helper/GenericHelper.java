@@ -77,7 +77,7 @@ public class GenericHelper<E, K extends Serializable> extends HibernateUtil {
 		return result;
 	}
 	
-	protected Criteria creatteEntittyCriteia() {
+	protected Criteria creatteEntityCriteia() {
 		return getSession().createCriteria(this.clazz);
 	}
 

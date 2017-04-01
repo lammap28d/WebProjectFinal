@@ -6,17 +6,19 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-<table>
+<form method="post" action="<c:url value="/cart.html?action=update"/>" >
+<table class="table">
     <thead>
 
         <tr>
-
-            <th class="product-thumbnail">&nbsp;</th>
-            <th class="product-name">Sản phẩm</th>
-            <th class="product-price">Giá</th>
-            <th class="product-quantity">Số lượng</th>
-            <th class="product-subtotal">Tổng</th>
+            <th>&nbsp;</th>     
+            <th>&nbsp;</th>
+            <th>Sản phẩm</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Tổng</th>
         </tr>
 
     </thead>
@@ -24,34 +26,49 @@
         <c:forEach items="${cart.cartDetails}" var="cartDetail">
 
 
-            <tr class="cart_item">
+            <tr>
+                <td>
+                    <a href="<c:url value="/cart.html?action=delete&bikeId=${cartDetail.bike.bikeId}"/>">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </a>
+                </td>
 
 
-
-                <td class="product-thumbnail">
+                <td>
                     <img width="105" height="70" src="data:image/png;base64,${cartDetail.bike.imageBase64}" >					</td>
 
-                <td class="product-name">
+                <td>
                     ${cartDetail.bike.bikeName}	</td>
 
                 <td class="product-price">
-                    <span class="amount">${cartDetail.cartDetailPrice}</span>					</td>
+                    <span class="amount">
+                        <fmt:formatNumber type="number" 
+            pattern="###,### đ" value="${cartDetail.cartDetailPrice}" />
+                      </span>					
+                </td>
 
                 <td class="product-quantity">
                     <div class="quantity-adder">
-                        <div class="quantity">${cartDetail.cartDetailQuantity}
-
+                        <div class="quantity">
+                            <input class="qty" name="cart[${cartDetail.bike.bikeId}]"step="1" min="0" value="${cartDetail.cartDetailQuantity}" title="SL" type="number" />
                         </div>
-                    </div>					</td>
+                    </div>					
+                </td>
 
                 <td class="product-subtotal">
                     <span class="amount">${cartDetail.cartDetailTotal}</span>					</td>
             </tr>
-        </c:forEach>
 
+        </c:forEach>
+        <tr>
+            <td colspan="6" class="actions">
+                <button class="btn btn-success" type="submit">Cập nhật Giỏ hàng</button>
+            </td>
+        </tr>
     </tbody>
 
 </table>
+     </form>
 <div class="cart-collaterals">
 
     <div class="cart_totals ">
@@ -83,3 +100,4 @@
     </div>
 
 </div>
+               

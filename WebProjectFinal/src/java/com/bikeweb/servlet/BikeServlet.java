@@ -6,6 +6,7 @@
 package com.bikeweb.servlet;
 
 import com.bikeweb.entity.Bike;
+import com.bikeweb.entity.Category;
 import com.bikeweb.helper.BikeHelper;
 import java.io.IOException;
 import java.util.List;
@@ -41,16 +42,23 @@ public class BikeServlet extends CommonServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         super.processRequest(request, response);
-
-        List<Bike> bikes = bikeHelper.getAll();
         String uri = request.getRequestURI();
-
-        request.setAttribute("bikes", bikes);
+        
         if (uri.equals("/WebProjectFinal/bikes.html")) {
+            List<Bike> bikes;
+            String categoryIdStr = request.getParameter("categoryId");
+            if (categoryIdStr != null) {
+                int categoryId = Integer.parseInt(categoryIdStr);
+                bikes = bikeHelper.getBikeByCategoryId(categoryId);
+
+            } else {
+                bikes = bikeHelper.getAll();
+            }
+            request.setAttribute("bikes", bikes);
             request.getRequestDispatcher("/home.jsp").forward(request, response);
         } else {
-            String bikeIdStr =request.getParameter("bikeId");
-            int bikeId =Integer.parseInt(bikeIdStr);
+            String bikeIdStr = request.getParameter("bikeId");
+            int bikeId = Integer.parseInt(bikeIdStr);
             Bike bike = bikeHelper.find(bikeId);
             request.setAttribute("bike", bike);
             request.getRequestDispatcher("/product.jsp").forward(request, response);

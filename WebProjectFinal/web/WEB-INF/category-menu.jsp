@@ -2,6 +2,8 @@
 
 <p class="lead">Bike Web</p>
 <c:forEach items="${categories}" var="category">
-   <a href="/bikes.html?categoryid=${category.categoryId}">${category.categoryName}
-    
+    <div> 
+        <a href="<c:url value="/bikes.html?categoryId=${category.categoryId}"/>">${category.categoryName}
+   </a>    
+    </div>
 </c:forEach>
